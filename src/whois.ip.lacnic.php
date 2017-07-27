@@ -64,7 +64,7 @@ class lacnic_handler {
             $r['network']['handle'] = $r['network']['aut-num'];
 
         if (isset($r['network']['nserver']))
-            $r['network']['nserver'] = array_unique($r['network']['nserver']);
+            $r['network']['nserver'] = array_unique((array)$r['network']['nserver']);
 
         $r = array('regrinfo' => $r);
         $r['regyinfo']['type'] = 'ip';
