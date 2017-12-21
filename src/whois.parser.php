@@ -704,7 +704,7 @@ function get_date($date, $format) {
     $date = str_replace("\t", ' ', $date);
 
     $parts = explode(' ', $date);
-    $res = false;
+    $res = array();
 
     if ((strlen($parts[0]) == 8 || count($parts) == 1) && is_numeric($parts[0])) {
         $val = $parts[0];
@@ -760,17 +760,22 @@ function get_date($date, $format) {
         }
     }
 
-    if ($res['m'] > 12) {
+    if (isset($res['m']) && $res['m'] > 12) {
         $v = $res['m'];
         $res['m'] = $res['d'];
         $res['d'] = $v;
     }
 
-    if ($res['y'] < 70)
+    if (isset($res['y']) && $res['y'] < 70)
         $res['y'] += 2000;
     else
-    if ($res['y'] <= 99)
+    if (isset($res['y']) && $res['y'] <= 99)
         $res['y'] += 1900;
 
-    return sprintf("%.4d-%02d-%02d", $res['y'], $res['m'], $res['d']);
+    return sprintf(
+        "%.4d-%02d-%02d",
+        (isset($res['y']) ? $res['y'] : 0),
+        (isset($res['m']) ? $res['m'] : 0),
+        (isset($res['d']) ? $res['d'] : 0)
+    );
 }
